@@ -1,0 +1,18 @@
+# Build outputs
+bin/
+obj/
+artifacts/
+[Bb]uild/
+[Bb]uilds/
+[Ss]aves/
+
+# IDE
+.vs/
+.vscode/
+*.user
+*.suo
+*.rsuser
+
+# OS
+.DS_Store
+Thumbs.db
