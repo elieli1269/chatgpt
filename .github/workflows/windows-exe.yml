@@ -1,0 +1,44 @@
+name: Build Windows EXE
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-windows-exe:
+    name: Build BlockHavenCitySimulator.exe
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore
+        run: dotnet restore BlockHavenCitySimulator.sln
+
+      - name: Build
+        run: dotnet build BlockHavenCitySimulator.sln --configuration Release --no-restore
+
+      - name: Publish single-file Windows EXE
+        run: >-
+          dotnet publish src/BlockHavenCitySimulator/BlockHavenCitySimulator.csproj
+          --configuration Release
+          --runtime win-x64
+          --self-contained true
+          -p:PublishSingleFile=true
+          -p:IncludeNativeLibrariesForSelfExtract=true
+          -p:PublishReadyToRun=false
+          --output artifacts/windows-x64
+
+      - name: Upload EXE artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: BlockHavenCitySimulator-windows-x64
+          path: artifacts/windows-x64/**

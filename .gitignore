@@ -1,18 +1,18 @@
-[Ll]ibrary/
-[Tt]emp/
-[Oo]bj/
+# Build outputs
+bin/
+obj/
+artifacts/
 [Bb]uild/
 [Bb]uilds/
-[Ll]ogs/
-[Uu]ser[Ss]ettings/
-*.csproj
-*.sln
+[Ss]aves/
+
+# IDE
+.vs/
+.vscode/
 *.user
-*.pidb
-*.booproj
-*.svd
-*.pdb
-*.mdb
-*.opendb
-*.VC.db
+*.suo
+*.rsuser
+
+# OS
 .DS_Store
+Thumbs.db

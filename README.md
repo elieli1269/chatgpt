@@ -1,37 +1,51 @@
-# BlockHaven City Simulator
+# BlockHaven City Simulator — Windows EXE sans Unity
 
-Projet Unity 2022+ solo offline mélangeant construction voxel, ville préfaite style Brookhaven, économie locale, PNJ à routines, véhicules et sauvegarde locale.
+BlockHaven City Simulator est maintenant un jeu Windows **C#/.NET 8 WinForms**, sans Unity, sans serveur et sans internet au runtime. GitHub Actions construit automatiquement un `.exe` Windows téléchargeable en artifact.
 
-## Fonctionnalités principales
+## Ce que contient le jeu
 
-- Monde voxel procédural par chunks optimisés, avec forêts, montagnes, rivière et zone ville.
-- Ville préfaite au spawn : routes, lampadaires, maison starter, maisons achetables, hôpital, police station et magasin.
-- Gameplay Minecraft-like : casser/poser des blocs, matériaux terre/pierre/bois/planches, mode créatif et survie simple.
-- Gameplay city simulator : PNJ citoyens/policiers/médecins/commerçants avec routine maison → travail → magasin → maison.
-- Économie locale : joueur commence à 2000$, prix de maisons/voitures, salaires de métiers.
-- Véhicules : voiture, moto, trafic PNJ simple, entrée/sortie avec `E`.
-- UI runtime inspirée Roblox : HUD argent + aide commandes.
-- Sauvegarde offline automatique dans `Application.persistentDataPath/Saves` : `world.json`, `player.json`, `economy.json`, `npcs.json`.
+- Monde voxel/isométrique généré localement avec ville préfaite au spawn.
+- Ville style Brookhaven : routes, lampadaires, maison starter, maisons achetables, hôpital, police station, magasin et forêt autour.
+- Gameplay Minecraft-like : casser/poser des blocs, inventaire, matériaux, mode survie/créatif.
+- Simulation de ville : PNJ avec routine maison → travail → magasin → retour maison, rôles, humeur et argent.
+- Économie locale : joueur à 2000$, métiers, salaires, maisons achetables, trésorerie de ville.
+- Véhicules : voiture, moto, trafic simple, entrée/sortie.
+- Sauvegarde offline exacte dans le dossier de l'exécutable :
+  - `Saves/world.json`
+  - `Saves/player.json`
+  - `Saves/economy.json`
+  - `Saves/npcs.json`
 
 ## Commandes
 
-- `ZQSD` ou `WASD` : déplacement FPS
+- `ZQSD` ou `WASD` : déplacement
 - `Shift` : sprint
-- `Space` : saut
-- Clic gauche : casser un bloc
-- Clic droit : poser un bloc
-- `1`-`4` : changer de matériau
+- Clic gauche : casser le bloc ciblé
+- Clic droit : poser le bloc sélectionné
+- `1` terre, `2` pierre, `3` bois, `4` planches, `5` verre
 - `C` : basculer créatif/survie
-- `E` : entrer/sortir véhicule
-- `F1`-`F4` : choisir un métier
+- `E` : entrer/sortir d'un véhicule proche
+- `B` : acheter une maison proche
+- `F1` policier, `F2` médecin, `F3` pompier, `F4` livreur
+- `F5` : sauvegarde manuelle
 
-## Build Windows
+## Télécharger l'exe depuis GitHub Actions
 
-Unity n'est pas inclus dans ce dépôt. Pour générer l'exécutable Windows :
+1. Aller dans l'onglet **Actions** du dépôt GitHub.
+2. Ouvrir le workflow **Build Windows EXE** le plus récent.
+3. Télécharger l'artifact **BlockHavenCitySimulator-windows-x64**.
+4. Dézipper et lancer `BlockHavenCitySimulator.exe`.
 
-1. Ouvrir le dossier avec Unity 2022.3 LTS ou plus récent.
-2. Laisser Unity importer les packages.
-3. Utiliser le menu `BlockHaven > Build Windows EXE`.
-4. L'exécutable est généré dans `Builds/Windows/BlockHavenCitySimulator.exe`.
+## Build local Windows
 
-Le jeu ne dépend d'aucun serveur et fonctionne entièrement en local.
+```powershell
+dotnet publish src/BlockHavenCitySimulator/BlockHavenCitySimulator.csproj `
+  --configuration Release `
+  --runtime win-x64 `
+  --self-contained true `
+  -p:PublishSingleFile=true `
+  -p:IncludeNativeLibrariesForSelfExtract=true `
+  --output artifacts/windows-x64
+```
+
+Le résultat est dans `artifacts/windows-x64/BlockHavenCitySimulator.exe`.
